@@ -8,7 +8,7 @@
 <body>
 
     <form method="post">
-        <label for="nome">Nome:</label>
+        <label for="nome">Nome do Evento:</label>
         <input type="text" name="nome" required> <br>
 
         <label for="descricao">Descrição:</label>
@@ -18,13 +18,13 @@
         <input type="date" name="data" required> <br>
 
         <label for="horario">Horário:</label>
-        <input type="time" name="horario" required>
+        <input type="time" name="horario" required> <br>
 
         <label for="local">Local:</label>
-        <input type="text" name="local" required>
+        <input type="text" name="local" required> <br>
 
         <label for="max_part">Máximo de Participantes:</label>
-        <input type="number" min="1" max="150" name="max_part" required>
+        <input type="number" min="1" max="150" name="max_part" required> <br>
 
         <input type="submit">
     </form>
