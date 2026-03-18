@@ -1,60 +1,50 @@
 <?php
-// 1. Carregar dependências e banco de dados primeiro para evitar erros de variável indefinida
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/DB/Database.php";
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/ParticipanteController.php";
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/EventoController.php";
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/InscricaoController.php";
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Views/partials/form_layout.php";
 
-// 2. Instanciar controllers para buscar os dados das listas
 $partCtrl = new ParticipanteController($pdo);
 $evenCtrl = new EventoController($pdo);
 $inscCtrl = new InscricaoController($pdo);
 
-// Buscar todos os registos para preencher os drop-downs
-$participantes = $partCtrl->listar(); // Certifique-se que o método retorna o array
-$eventos = $evenCtrl->buscarTodos(); 
+$participantes = $partCtrl->buscarTodos();
+$eventos = $evenCtrl->buscarTodos();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $inscCtrl->inscrever($_POST['participante_id'], $_POST['evento_id']);
 }
+
+renderFormPageStart('Nova inscrição', 'Conecte participantes aos eventos com um fluxo simples e visualmente mais refinado.');
 ?>
+<form method="post">
+    <div class="form-grid">
+        <div class="field field-full">
+            <label for="participante_id">Selecionar participante</label>
+            <select id="participante_id" name="participante_id" required>
+                <option value="">-- Escolha um participante --</option>
+                <?php foreach ($participantes as $p): ?>
+                    <option value="<?= $p['id'] ?>"><?= htmlspecialchars($p['nome'], ENT_QUOTES, 'UTF-8') ?> (ID: <?= $p['id'] ?>)</option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Realizar Inscrição</title>
-</head>
-<body>
+        <div class="field field-full">
+            <label for="evento_id">Selecionar evento</label>
+            <select id="evento_id" name="evento_id" required>
+                <option value="">-- Escolha um evento --</option>
+                <?php foreach ($eventos as $e): ?>
+                    <option value="<?= $e['id'] ?>"><?= htmlspecialchars($e['nome'], ENT_QUOTES, 'UTF-8') ?> - Vagas: <?= $e['max_part'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
 
-    <h2>Nova Inscrição</h2>
-    <form method="post">
-        
-        <label for="participante_id">Selecionar Participante:</label>
-        <select name="participante_id" required>
-            <option value="">-- Escolha um Participante --</option>
-            <?php foreach ($participantes as $p): ?>
-                <option value="<?= $p['id'] ?>">
-                    <?= htmlspecialchars($p['nome']) ?> (ID: <?= $p['id'] ?>)
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
+    <div class="form-actions">
+        <input type="submit" value="Confirmar inscrição">
+        <a class="btn btn-secondary" href="/draft-eventos/index.php">Voltar ao painel</a>
+    </div>
+</form>
+<?php renderFormPageEnd(); ?>
 
-        <label for="evento_id">Selecionar Evento:</label>
-        <select name="evento_id" required>
-            <option value="">-- Escolha um Evento --</option>
-            <?php foreach ($eventos as $e): ?>
-                <option value="<?= $e['id'] ?>">
-                    <?= htmlspecialchars($e['nome']) ?> - Vagas: <?= $e['max_part'] ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <br><br>
-
-        <input type="submit" value="Confirmar Inscrição">
-        <a href="listar.php">Voltar</a>
-    </form>
-
-</body>
-</html>

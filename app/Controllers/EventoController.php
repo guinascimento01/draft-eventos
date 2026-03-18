@@ -15,12 +15,11 @@ class EventoController{
     }
 
     public function buscarEvento($id){
-        $evento = $this->eventoModel->buscarEvento($id);
-        return $evento;
+        return $this->eventoModel->buscarEvento($id);
     }
 
     public function cadastrar($nome, $descricao, $data, $horario, $local, $max_part){
-    return $this->eventoModel->cadastrar($nome, $descricao, $data, $horario, $local, $max_part);
+        return $this->eventoModel->cadastrar($nome, $descricao, $data, $horario, $local, $max_part);
     }
 
     public function editar($nome, $descricao, $data, $horario, $local, $max_part, $id){
@@ -28,14 +27,12 @@ class EventoController{
     }
 
     public function deletar($id){
-        $evento = $this->eventoModel->deletar($id);
-        return $evento;
+        return $this->eventoModel->deletar($id);
     }
 
-    public function buscarTodos()
-{
-    return $this->listar(); // ou código SQL de SELECT se listar não existir
+    public function buscarTodos() {
+        return $this->eventoModel->buscarTodos();
+    }
 }
-}
-
 ?>
+

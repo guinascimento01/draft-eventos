@@ -1,62 +1,54 @@
 <?php
-
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/ParticipanteController.php";
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/DB/Database.php";
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Views/partials/form_layout.php";
 
 $ParticipanteController = new ParticipanteController($pdo);
 
-if (isset($_GET['id'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_GET['id'])) {
     $id = $_GET['id'];
-    $participante = $ParticipanteController->buscarParticipante($id);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Participante</title>
-</head>
-<body>
-    
-    <h2>Editar Participante</h2>
-    <form action="" method="post">
-
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" value="<?= $participante['nome']; ?>" required> <br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" value="<?= $participante['email']; ?>" required> <br>
-
-        <label for="telefone">Telefone:</label>
-        <input type="text" name="telefone" value="<?= $participante['telefone']; ?>" required> <br>
-
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" value="<?= $participante['senha']; ?>" required> <br>
-
-        <input type="submit" value="Atualizar">
-
-    </form>
-
-</body>
-</html>
-
-<?php
-} 
-else {
-    header("Location: /draft-eventos/app/Views/participante/listar.php");
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $telefone = $_POST['telefone'];
 
-    // Chama o método editar passando os 5 parâmetros necessários (nome, email, telefone, senha, id)
-    $ParticipanteController->editar($nome, $email, $telefone, $senha, $id);
-    
+    $ParticipanteController->editar($nome, $email, $telefone, null, $id);
     header("Location: /draft-eventos/index.php");
     exit();
 }
+
+if (!isset($_GET['id'])) {
+    header("Location: /draft-eventos/index.php");
+    exit();
+}
+
+$id = $_GET['id'];
+$participante = $ParticipanteController->buscarParticipante($id);
+
+renderFormPageStart('Editar participante', 'Atualize os dados de contato sem perder agilidade na operação do evento.');
 ?>
+<form method="post">
+    <div class="form-grid">
+        <div class="field">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" name="nome" value="<?= htmlspecialchars($participante['nome'], ENT_QUOTES, 'UTF-8') ?>" required>
+        </div>
+
+        <div class="field">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" type="text" name="telefone" value="<?= htmlspecialchars($participante['telefone'], ENT_QUOTES, 'UTF-8') ?>" required>
+        </div>
+
+        <div class="field field-full">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" value="<?= htmlspecialchars($participante['email'], ENT_QUOTES, 'UTF-8') ?>" required>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="submit" value="Atualizar participante">
+        <a class="btn btn-secondary" href="/draft-eventos/index.php">Voltar ao painel</a>
+    </div>
+    <p class="page-note">A edição mantém foco nos dados de contato. Se quiser, depois podemos criar um fluxo específico para redefinição de senha.</p>
+</form>
+<?php renderFormPageEnd(); ?>
+

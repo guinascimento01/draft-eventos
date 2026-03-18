@@ -12,8 +12,7 @@ class InscricaoController {
     }
 
     public function listarInscricoes() {
-        $inscricoes = $this->inscricaoModel->buscarTodasComDetalhes();
-        include_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Views/inscricao/listar.php";
+        return $this->inscricaoModel->buscarTodasComDetalhes();
     }
 
     public function inscrever($participante_id, $evento_id) {

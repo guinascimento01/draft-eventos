@@ -1,40 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Participantes</title>
-</head>
-
-<body>
-
-    <h2>Cadastrar Novo Participante</h2>
-    <form method="post">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" required> <br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" required> <br>
-
-        <label for="telefone">Telefone:</label>
-        <input type="text" name="telefone" required> <br>
-
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" required> <br>
-
-        <input type="submit" value="Cadastrar">
-    </form>
-
-</body>
-
-</html>
-
 <?php
-
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/ParticipanteController.php";
 require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/DB/Database.php";
-
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Views/partials/form_layout.php";
 
 $ParticipanteController = new ParticipanteController($pdo);
 
@@ -44,12 +11,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefone = $_POST['telefone'];
     $senha = $_POST['senha'];
 
-    // O Controller cuidará de transformar a senha em hash antes de enviar ao Model
     $ParticipanteController->cadastrar($nome, $email, $telefone, $senha);
-    
-    // Redireciona para a página principal após o cadastro
     header("Location: ../../../index.php");
     exit();
 }
 
+renderFormPageStart('Cadastrar participante', 'Adicione novos contatos para manter a base de público pronta para inscrições e relacionamento.');
 ?>
+<form method="post">
+    <div class="form-grid">
+        <div class="field">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" name="nome" placeholder="Nome completo" required>
+        </div>
+
+        <div class="field">
+            <label for="telefone">Telefone</label>
+            <input id="telefone" type="text" name="telefone" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <div class="field field-full">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="contato@empresa.com" required>
+        </div>
+
+        <div class="field field-full">
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" name="senha" placeholder="Defina uma senha segura" required>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <input type="submit" value="Salvar participante">
+        <a class="btn btn-secondary" href="/draft-eventos/index.php">Voltar ao painel</a>
+    </div>
+</form>
+<?php renderFormPageEnd(); ?>
+

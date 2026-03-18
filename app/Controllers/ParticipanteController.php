@@ -14,6 +14,10 @@ class ParticipanteController {
         return $participantes;
     }
 
+    public function buscarTodos() {
+        return $this->participanteModel->buscarTodos();
+    }
+
     public function buscarParticipante($id) {
         return $this->participanteModel->buscarPorId($id);
     }
@@ -25,9 +29,9 @@ class ParticipanteController {
         return $this->participanteModel->cadastrar($nome, $email, $telefone, $senhaHash);
     }
 
-    // Edição (Aqui você decide se quer atualizar a senha ou não)
+    // EdiÃ§Ã£o (Aqui vocÃª decide se quer atualizar a senha ou nÃ£o)
     public function editar($nome, $email, $telefone, $senha, $id) {
-        return $this->participanteModel->editar($nome, $email, $telefone, $senha, $id);
+        return $this->participanteModel->editar($nome, $email, $telefone, $id);
     }
 
     public function deletar($id) {
