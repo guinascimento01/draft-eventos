@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Eventos</title>
 </head>
+
 <body>
 
     <form method="post">
@@ -30,17 +32,18 @@
     </form>
 
 </body>
+
 </html>
 
 <?php
 
-require_once "C:/xampp/htdocs/draft-eventos/app/Controllers/EventoController.php";
-require_once "C:/xampp/htdocs/draft-eventos/app/DB/Database.php";
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Controllers/EventoController.php";
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/DB/Database.php";
 
 
-$EventoController = new EventoController ($pdo);
+$EventoController = new EventoController($pdo);
 
-if($_SERVER['REQUEST_METHOD'] == $_POST){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
     $data = $_POST['data'];
@@ -48,8 +51,9 @@ if($_SERVER['REQUEST_METHOD'] == $_POST){
     $local = $_POST['local'];
     $max_part = $_POST['max_part'];
 
-    $UsuarioController->cadastrar($nome, $descricao, $data, $horario, $local, $max_part);
-    header("Location:../../index.php");
+
+    $EventoController->cadastrar($nome, $descricao, $data, $horario, $local, $max_part);
+    header("Location: ../../../index.php");
 }
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-require_once "C:/xampp/htdocs/draft-eventos/app/Models/EventoModel.php";
+require_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Models/EventoModel.php";
 
 class EventoController{
     private $eventoModel;
@@ -10,7 +10,7 @@ class EventoController{
 
     public function listar(){
         $eventos = $this->eventoModel->buscarTodos();
-        include_once "C:/xampp/htdocs/draft-eventos/app/Views/evento/listar.php";
+        include_once "C:/Turma2/xampp/htdocs/draft-eventos/app/Views/evento/listar.php";
         return $eventos;
     }
 
@@ -27,10 +27,15 @@ class EventoController{
         $this->eventoModel->editar($nome, $descricao, $data, $horario, $local, $max_part, $id);
     }
 
-    public function deletar($nome, $descricao, $data, $horario, $local, $max_part, $id){
-        $evento = $this->eventoModel->deletar($nome, $descricao, $data, $horario, $local, $max_part, $id);
+    public function deletar($id){
+        $evento = $this->eventoModel->deletar($id);
         return $evento;
     }
+
+    public function buscarTodos()
+{
+    return $this->listar(); // ou código SQL de SELECT se listar não existir
+}
 }
 
 ?>

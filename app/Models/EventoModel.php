@@ -9,7 +9,7 @@ class EventoModel{
 
     public function buscarTodos(): array {
         $stmt = $this->pdo->query('SELECT*FROM evento');
-        return $stmt->fetch (PDO::FETCH_ASSOC);
+        return $stmt->fetchAll (PDO::FETCH_ASSOC);
     }
 
     public function buscarEvento($id): array {
@@ -31,13 +31,13 @@ class EventoModel{
         ]);
     }
 
-    public function editar($nome, $descricao, $data, $horario, $local, $max_part, $id){
+    public function editar( $nome, $descricao, $data, $horario, $local, $max_part, $id){
         $sql = "UPDATE evento SET nome=?, descricao=?, data=?, horario=?, local=?, max_part=? WHERE id=?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$nome, $descricao, $data, $horario, $local, $max_part, $id]);
     }
 
-    public function deletar($nome, $descricao, $data, $horario, $local, $max_part, $id){
+    public function deletar($id){
         $sql = "DELETE FROM evento WHERE id=?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
