@@ -35,10 +35,6 @@ renderFormPageStart('Cadastrar participante', 'Adicione novos contatos para mant
             <input id="email" type="email" name="email" placeholder="contato@empresa.com" required>
         </div>
 
-        <div class="field field-full">
-            <label for="senha">Senha</label>
-            <input id="senha" type="password" name="senha" placeholder="Defina uma senha segura" required>
-        </div>
     </div>
 
     <div class="form-actions">
